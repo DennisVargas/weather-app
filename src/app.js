@@ -1,37 +1,43 @@
 /* jshint esversion:6 */
 const express = require('express');
 const path = require('path');
+const hbs = require('hbs');
 
 const app = express();
+
+// Define paths for Express config
 const publicDirectoryPath = path.join(__dirname, '../public');
-const viewsDirectoryPath = path.join(__dirname,'../views');
-console.log(publicDirectoryPath);
+const viewsDirectoryPath = path.join(__dirname,'../templates/views');
+const partialDirectoryPath = path.join(__dirname,'../templates/partials');
+
+// Setup handlebars engine and views location
 app.set('view engine', 'hbs');
 app.set('views', viewsDirectoryPath);
+hbs.registerPartials(partialDirectoryPath);
 app.use(express.static(publicDirectoryPath));
 
+const name = 'Dennis Vargas'
 app.get('', (req, res) =>{
     res.render('index',{
         title: 'Weather',
-        name: 'Dennis Vargas'
+        name
     });
 });
 
 app.get('/about', (req, res) => {
     res.render('about',{
         title: 'About Me',
-        name: 'Dennis Vargas'
+        name
     });
 });
 
 app.get('/help', (req, res) => {
     res.render('help',{
         title: 'Help',
+        name,
         msg: 'Help is on the way!'
     });
 });
-
-
 
 app.get('/weather', (req, res) => {
     const weather = {
@@ -39,6 +45,21 @@ app.get('/weather', (req, res) => {
         forecast: 'Slush'
     };
     res.send(weather);
+});
+
+app.get('/help/*', (req, res) => {
+    res.render('404',{
+        title: 'Help',
+        msg: 'Help article not found',
+        name});
+});
+
+app.get('*', (req, res) => {
+    res.render('404',{
+        title: 'ERROR! ADDRESS NOT FOUND',
+        name,
+        msg: 'Check Web Address.'
+    });
 });
 
 app.listen(3000,() => {
