@@ -40,11 +40,26 @@ app.get('/help', (req, res) => {
 });
 
 app.get('/weather', (req, res) => {
+    if(!req.query.address){
+        return res.send({
+            error: 'You must provide an address term.'});
+    }
     const weather = {
-        location: 'Longview',
-        forecast: 'Slush'
+        forecast: 'Slush',
+        address: req.query.address
     };
     res.send(weather);
+});
+
+app.get('/products',(req,res)=>{
+    if(!req.query.search){
+        return res.send({
+            error: 'You must provide search terms.'
+        });
+    }
+    res.send({
+        products:[]
+    });
 });
 
 app.get('/help/*', (req, res) => {
