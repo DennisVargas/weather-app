@@ -16,7 +16,7 @@ app.set('views', viewsDirectoryPath);
 hbs.registerPartials(partialDirectoryPath);
 app.use(express.static(publicDirectoryPath));
 
-const name = 'Dennis Vargas'
+const name = 'Dennis Vargas';
 app.get('', (req, res) =>{
     res.render('index',{
         title: 'Weather',
