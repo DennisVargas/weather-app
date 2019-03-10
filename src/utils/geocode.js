@@ -7,7 +7,7 @@ const geocode = (address, callback) => {
     request({url: url, json: true}, (error, {body}={}) => {
         if(error)
             callback("Network Error.", undefined);
-        else if(!body.features){
+        else if(!body.features||body.features.length===0){
             callback(`Can not find location: ${address}`, undefined);
         }else{
             const data = {
