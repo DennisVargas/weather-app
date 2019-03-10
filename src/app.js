@@ -44,20 +44,23 @@ app.get('/help', (req, res) => {
 app.get('/weather', (req, res) => {
     if(!req.query.address){
         return res.send({
-            error: 'You must provide an address term.'});
+            error: 'ERROR! You must provide an address term.'});
     }
     geocode(req.query.address,(error, { latitude, longitude,location} = {}) => {
+        if(error)
+            return res.send({error});
         forecast(latitude, longitude, (error, forecastMsg) =>{
+            if(error)
+                return res.send({error});
             res.send({location, forecastMsg});
         });
-        
     });
 });
 
 app.get('/products',(req,res)=>{
     if(!req.query.search){
         return res.send({
-            error: 'You must provide search terms.'
+            error: 'ERROR! You must provide search terms.'
         });
     }
     res.send({
