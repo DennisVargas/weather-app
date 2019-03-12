@@ -1,7 +1,7 @@
 /*jshint esversion: 6*/
 const request = require('request');
 const forecast = (latitude, longitude, callback) =>{
-    const url = 'https://api.darksky.net/forecast/94cbe7c92ae0d8142c9a81264b6e79b4/'+latitude+','+longitude;
+    const url = 'https://api.darksky.net/forecast/'+process.env.DARKSKYTOK+'/'+latitude+','+longitude;
     request({url, json: true}, (error, {body}) => {
         if(error)
             callback("Network Error.", undefined);
