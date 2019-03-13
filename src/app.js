@@ -31,6 +31,7 @@ app.get('', (req, res) =>{
 app.get('/about', (req, res) => {
     res.render('about',{
         title: 'About',
+        about: 'Gives a weather forecast based on the users location query.',
         name
     });
 });
